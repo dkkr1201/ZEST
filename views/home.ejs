@@ -1,0 +1,158 @@
+<% layout('/layout/boilerplate') -%>
+
+    <!-- Hero Section with Delivery Theme -->
+    <section class="zest-hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Welcome to Zest</h1>
+                <p class="hero-subtitle">Fast. Fresh. Delivered. Shop the Best Products Online</p>
+                <p class="hero-description">Get your favorite items delivered to your doorstep in minutes. Browse
+                    thousands of products and enjoy exclusive deals.</p>
+                <div class="hero-buttons">
+                    <a href="/products" class="btn btn-primary btn-lg">
+                        <i class="fas fa-shopping-bag"></i> Start Shopping
+                    </a>
+                    <a href="/login" class="btn btn-outline-primary btn-lg ms-3">
+                        <i class="fas fa-user"></i> Sign In
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="delivery-illustration">
+                    <i class="fas fa-box"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Choose Zest?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h4>Fast Delivery</h4>
+                        <p class="text-muted">Get your orders delivered quickly and safely to your location.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4>Secure Payments</h4>
+                        <p class="text-muted">100% secure transactions with Razorpay integration.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Best Prices</h4>
+                        <p class="text-muted">Compare prices and find the best deals on quality products.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <h3 class="stat-number" id="home-product-count">
+                            <%= productCount %>
+                        </h3>
+                        <p class="stat-label">Products</p>
+                    </div>
+                    <script>
+                        // Real-time product count polling
+                        const productCountElement = document.getElementById('home-product-count');
+
+                        async function updateProductCount() {
+                            try {
+                                const response = await fetch('/api/product-count');
+                                if (response.ok) {
+                                    const data = await response.json();
+                                    if (data.count !== undefined) {
+                                        productCountElement.innerText = data.count;
+                                    }
+                                }
+                            } catch (err) {
+                                console.error('Failed to update product count:', err);
+                            }
+                        }
+
+                        // Poll every 5 seconds to keep the count fresh
+                        setInterval(updateProductCount, 5000);
+                    </script>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <h3 class="stat-number">100%</h3>
+                        <p class="stat-label">Authentic</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <h3 class="stat-number">24/7</h3>
+                        <p class="stat-label">Available</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <h3 class="stat-number">✓</h3>
+                        <p class="stat-label">Verified Reviews</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seller Integration Section -->
+    <section class="seller-cta-section py-5 bg-dark text-white text-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-7 text-md-start mb-4 mb-md-0">
+                    <% if(currentUser && currentUser.role==='seller' ) { %>
+                        <h2 class="fw-bold mb-3">Manage Your Business</h2>
+                        <p class="lead mb-0 text-white-50">Track your sales, manage inventory, and grow your brand with
+                            Zest's seller dashboard.</p>
+                        <% } else { %>
+                            <h2 class="fw-bold mb-3">Start Selling on Zest</h2>
+                            <p class="lead mb-0 text-white-50">Join our growing community of sellers and reach millions
+                                of customers across the platform.</p>
+                            <% } %>
+                </div>
+                <div class="col-md-5">
+                    <% if(currentUser && currentUser.role==='seller' ) { %>
+                        <a href="/products/seller" class="btn btn-primary btn-lg px-5">
+                            <i class="fas fa-chart-line me-2"></i>Go to Dashboard
+                        </a>
+                        <% } else { %>
+                            <a href="/register" class="btn btn-outline-light btn-lg px-5">
+                                <i class="fas fa-store me-2"></i>Become a Seller
+                            </a>
+                            <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5 bg-primary text-white text-center">
+        <div class="container">
+            <h2>Ready to Start Shopping?</h2>
+            <p class="lead mb-4">Join thousands of happy customers enjoying Zest</p>
+            <a href="/products" class="btn btn-light btn-lg">
+                <i class="fas fa-arrow-right"></i> Browse Now
+            </a>
+        </div>
+    </section>

@@ -1,0 +1,82 @@
+<% layout('/layout/boilerplate') -%>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 mt-5">
+                <div class="card-header bg-success text-white py-3">
+                    <h4 class="mb-0 fw-bold"><i class="fas fa-edit me-2"></i>Edit Product</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/products/<%= product._id %>?_method=PATCH" method="POST" class="needs-validation"
+                        novalidate>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Product Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-tag"></i></span>
+                                <input type="text" name="name" class="form-control" value="<%= product.name %>"
+                                    required>
+                                <div class="invalid-feedback">Please provide a product name.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Image URL</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-image"></i></span>
+                                <input type="text" name="image" class="form-control" value="<%= product.image %>"
+                                    required>
+                                <div class="invalid-feedback">Please provide a valid image URL.</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Price (₹)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-dollar-sign"></i></span>
+                                    <input type="number" name="price" class="form-control" value="<%= product.price %>"
+                                        min="0" step="0.01" required>
+                                    <div class="invalid-feedback">Please enter a valid price.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Status</label>
+                                <select class="form-select bg-light" disabled>
+                                    <option selected>Active / Selling</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Detailed Description</label>
+                            <textarea name="desc" class="form-control" rows="4" required><%= product.desc %></textarea>
+                            <div class="invalid-feedback">Product description is required.</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-lg fw-bold py-3 shadow-sm">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                            <a href="/products/seller" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>

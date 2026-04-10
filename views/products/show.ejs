@@ -1,0 +1,130 @@
+<% layout('/layout/boilerplate') -%>
+
+    <div class="container py-5">
+        <div class="row">
+            <%- include('../partials/flash') %>
+
+                <!-- Product Details Section -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="<%= product.image %>" class="card-img-top" style="height: 400px; object-fit: cover;"
+                            alt="<%= product.name %>">
+                        <div class="card-body">
+                            <h2 class="card-title fw-bold">
+                                <%= product.name %>
+                            </h2>
+
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <h3 class="text-primary mb-0" id="amount-display">₹ <%= product.price %>
+                                </h3>
+                                <% if(product.avgRating) { %>
+                                    <span class="badge bg-success">
+                                        <%= product.avgRating %> ⭐
+                                    </span>
+                                    <% } %>
+                            </div>
+
+                            <% if(product.author) { %>
+                                <div class="mb-4">
+                                    <span class="text-muted"><i class="fas fa-store me-1"></i> Sold by: </span>
+                                    <span class="fw-bold">
+                                        <%= product.author.username %>
+                                    </span>
+                                </div>
+                                <% } %>
+
+                                    <p class="card-text text-muted mb-4">
+                                        <%= product.desc %>
+                                    </p>
+
+                                    <div class="d-grid gap-2 mb-3">
+                                        <form action="/user/<%= product._id %>/cart/add?buyNow=true" method="POST"
+                                            class="d-inline">
+                                            <button id="buy-btn" class="btn btn-primary btn-lg">
+                                                <i class="fas fa-bolt"></i> Buy Now
+                                            </button>
+                                        </form>
+                                        <form action="/user/<%= product._id %>/cart/add" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-secondary btn-lg">
+                                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <% if (currentUser && currentUser.role==='seller' && (product.author &&
+                                        product.author.equals(currentUser._id))) { %>
+                                        <div class="d-grid gap-2">
+                                            <a href="/products/<%= product._id %>/edit"
+                                                class="btn btn-outline-success btn-sm">
+                                                <i class="fas fa-edit"></i> Edit Product
+                                            </a>
+                                            <form action="/products/<%= product._id %>?_method=DELETE" method="POST"
+                                                onsubmit="return confirm('Are you sure?');">
+                                                <button type="submit" class="btn btn-outline-danger w-100 btn-sm">
+                                                    <i class="fas fa-trash"></i> Delete Product
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold mb-4">Leave Your Review</h4>
+                            <form action="/products/<%= product._id %>/review" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Rating</label>
+                                    <fieldset class="starability-basic">
+                                        <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0"
+                                            checked aria-label="No rating." />
+                                        <input type="radio" id="first-rate1" name="rating" value="1" />
+                                        <label for="first-rate1" title="Terrible">1 star</label>
+                                        <input type="radio" id="first-rate2" name="rating" value="2" />
+                                        <label for="first-rate2" title="Not good">2 stars</label>
+                                        <input type="radio" id="first-rate3" name="rating" value="3" />
+                                        <label for="first-rate3" title="Average">3 stars</label>
+                                        <input type="radio" id="first-rate4" name="rating" value="4" />
+                                        <label for="first-rate4" title="Very good">4 stars</label>
+                                        <input type="radio" id="first-rate5" name="rating" value="5" />
+                                        <label for="first-rate5" title="Amazing">5 stars</label>
+                                    </fieldset>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Comment</label>
+                                    <textarea class="form-control" name="comment" rows="3"
+                                        placeholder="Share your experience..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Reviews List -->
+                    <div>
+                        <h4 class="fw-bold mb-3">Customer Reviews</h4>
+                        <% if(product.reviews.length===0) { %>
+                            <div class="alert alert-info">No reviews yet. Be the first to review!</div>
+                            <% } else { %>
+                                <% for( let review of product.reviews ) { %>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <p class="starability-result mb-0" data-rating="<%= review.rating %>">
+                                                    <%= review.rating %> stars
+                                                </p>
+                                            </div>
+                                            <p class="card-text">
+                                                <%= review.comment %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                    </div>
+                </div>
+        </div>
+    </div>

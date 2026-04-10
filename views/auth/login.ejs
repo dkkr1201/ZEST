@@ -1,0 +1,35 @@
+<% layout('/layout/boilerplate') -%>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form action="/login" method="POST" class="mt-5">
+            <%- include('../partials/flash') %>
+            
+            <h3 class="mb-4">Login to Zest</h3>
+            
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Login As</label>
+                <select name="role" class="form-select" required>
+                    <option value="">Select your role</option>
+                    <option value="buyer">Buyer</option>
+                    <option value="seller">Seller</option>
+                </select>
+                <small class="text-muted">Select the role your account was registered with</small>
+            </div>
+            
+            <button class="btn btn-primary w-100 mb-3">Login</button>
+            
+            <p class="text-center">Don't have an account? <a href="/register">Register here</a></p>
+        </form>
+    </div>
+</div>

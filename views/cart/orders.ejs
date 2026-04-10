@@ -1,0 +1,92 @@
+<% layout('/layout/boilerplate') -%>
+
+    <div class="container py-5">
+        <%- include('../partials/flash') %>
+
+            <div class="row items-center mb-4">
+                <div class="col-md-8">
+                    <h2 class="fw-bold"><i class="fas fa-shopping-bag text-primary me-2"></i>My Orders</h2>
+                    <p class="text-muted">Manage and track your recent purchases</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="/products" class="btn btn-outline-primary shadow-sm"><i
+                            class="fas fa-search me-2"></i>Continue Shopping</a>
+                </div>
+            </div>
+
+            <% if (orders.length===0) { %>
+                <div class="card shadow-sm border-0 py-5 text-center bg-light">
+                    <div class="card-body">
+                        <i class="fas fa-box-open fs-1 text-muted mb-4"></i>
+                        <h4 class="fw-bold">No orders found</h4>
+                        <p class="text-muted">You haven't placed any orders yet. Start exploring our products!</p>
+                        <a href="/products" class="btn btn-primary btn-lg px-4 mt-2">Explore Products</a>
+                    </div>
+                </div>
+                <% } else { %>
+                    <% for( let order of orders ) { %>
+                        <div class="card shadow-sm border-0 mb-4 overflow-hidden">
+                            <div class="card-header bg-white py-3 border-bottom">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6">
+                                        <span class="text-muted small text-uppercase fw-bold">Order ID</span>
+                                        <div class="fw-bold text-primary">
+                                            <%= order._id %>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 text-sm-center mt-2 mt-sm-0">
+                                        <span class="text-muted small text-uppercase fw-bold">Date</span>
+                                        <div class="fw-bold">
+                                            <%= order.createdAt.toDateString() %>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 text-sm-end mt-2 mt-sm-0">
+                                        <span class="text-muted small text-uppercase fw-bold">Total Amount</span>
+                                        <div class="fw-bold fs-5 text-success">₹ <%= order.amount.toFixed(2) %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body bg-light">
+                                <div class="row g-3">
+                                    <% for( let item of order.products ) { %>
+                                        <div class="col-12 col-md-6">
+                                            <div
+                                                class="d-flex bg-white p-3 rounded shadow-sm align-items-center border">
+                                                <img src="<%= item.productId.image %>" class="rounded me-3"
+                                                    style="width: 60px; height: 60px; object-fit: cover;">
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-0 fw-bold">
+                                                        <%= item.productId.name %>
+                                                    </h6>
+                                                    <div class="d-flex justify-content-between align-items-center mt-1">
+                                                        <span class="text-muted small">Qty: <%= item.quantity %></span>
+                                                        <span class="fw-bold text-primary">₹ <%= item.price.toFixed(2)
+                                                                %></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span
+                                        class="badge bg-success-soft text-success border border-success px-3 py-2 rounded-pill">
+                                        <i class="fas fa-check-circle me-1"></i> Paid Successfully
+                                    </span>
+                                    <a href="/products" class="btn btn-link btn-sm text-decoration-none p-0 fw-bold">Buy
+                                        Again <i class="fas fa-chevron-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } %>
+    </div>
+
+    <style>
+        .bg-success-soft {
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+    </style>
