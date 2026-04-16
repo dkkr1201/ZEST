@@ -39,6 +39,10 @@ router.post('/user/:productId/cart/add', isLoggedIn, async (req, res) => {
 router.get('/user/cart', isLoggedIn, async (req, res) => {
     if (req.query.payment === 'success') {
         req.flash('success', 'Payment Successful! Your order has been placed.');
+    } else if (req.query.payment === 'failed') {
+        req.flash('error', 'Payment Failed! Please try again.');
+    } else if (req.query.payment === 'cancelled') {
+        req.flash('error', 'Payment was cancelled.');
     }
     const userId = req.user._id;
     const user = await User.findById(userId).populate('cart.productId');

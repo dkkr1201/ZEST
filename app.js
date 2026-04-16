@@ -85,11 +85,13 @@ const productRoutes = require('./routes/product');
 const reviewRoutes = require('./routes/review');
 const authRoutes = require('./routes/auth');
 const cartRoutes = require('./routes/cart');
+const shopperRoutes = require('./routes/shopper');
 
 // -------------- APIs
 const productAPI = require('./routes/api/productapi');
 const paymentAPI = require('./routes/api/paymentapi');
 const statsAPI = require('./routes/api/statsapi');
+const shopperAPI = require('./routes/api/shopperapi');
 
 app.use('/products', productRoutes);
 app.use(reviewRoutes);
@@ -97,7 +99,9 @@ app.use(authRoutes);
 app.use(productAPI);
 app.use(cartRoutes);
 app.use(paymentAPI);
+app.use('/shopper', shopperRoutes);
 app.use('/api', statsAPI);
+app.use('/api', shopperAPI);
 
 
 const PORT = process.env.PORT || 5000;

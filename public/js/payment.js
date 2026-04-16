@@ -63,9 +63,17 @@ async function makeOrder(amount, keyId) {
             },
             "theme": {
                 "color": "#0d6efd"
+            },
+            "modal": {
+                "ondismiss": function() {
+                    window.location.replace('/user/cart?payment=cancelled');
+                }
             }
         };
         var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response) {
+            window.location.replace('/user/cart?payment=failed');
+        });
         rzp1.open();
     }
     catch (e) {

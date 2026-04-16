@@ -9,7 +9,8 @@
 - 🛒 **Shopping Cart**: Add to cart, manage quantities
 - ⭐ **Reviews & Ratings**: Leave reviews with star ratings
 - ❤️ **Wishlist**: Like/unlike products
-- 💳 **Payment Integration**: Razorpay payment gateway (optional)
+- 💳 **Payment Integration**: Razorpay gateway with robust success/failure simulation and handling.
+- ✨ **AI Personal Shopper Agent**: Direct `@google/genai` powered chat assistant that constructs product summaries and suggests items which can be directly added to your cart!
 - 🛡️ **Session Management**: Secure session handling with MongoDB store
 - 💬 **Flash Messages**: User feedback on actions
 
@@ -78,6 +79,7 @@ SECRET=zest_secret_session_key_2026
 PORT=5000
 RAZORPAY_KEY_ID=rzp_test_i1wlOQxtaGQQzK
 RAZORPAY_SECRET_KEY=test_secret_key
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 **For MongoDB Atlas** (cloud):
@@ -190,6 +192,10 @@ http://localhost:5000
 - `POST /order` - Create Razorpay order
 - `POST /payment-verify` - Verify payment
 
+### ✨ AI Agent
+- `GET /shopper` - AI Personal Shopper UI
+- `POST /api/shopper/chat` - Interact with the Google Gemini LLM API
+
 ## 🛠️ Troubleshooting
 
 ### ❌ MongoDB Connection Error
@@ -231,6 +237,7 @@ npm install
 - **Templating**: EJS with ejs-mate 📄
 - **Validation**: Joi 🛡️
 - **Payment**: Razorpay 2.9 💳
+- **AI Integration**: @google/genai (Gemini API) 🤖 
 - **Frontend**: Bootstrap 5.3, FontAwesome 🎨
 - **Other**: dotenv, method-override, connect-flash 🔧
 

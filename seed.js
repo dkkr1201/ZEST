@@ -9,8 +9,8 @@ async function seedData() {
         await mongoose.connect(db_URL, { serverSelectionTimeoutMS: 5000 });
         console.log('Connected to zest-db');
 
-        await Product.deleteMany({});
-        console.log('Cleared existing products');
+        // await Product.deleteMany({});
+        console.log('Will not clear existing products (Preserving User Data).');
 
         const dummy_data = [
             {
